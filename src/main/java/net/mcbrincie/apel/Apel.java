@@ -6,15 +6,15 @@ import net.mcbrincie.apel.item.ModItems;
 import net.mcbrincie.apel.lib.renderers.ApelFramePayload;
 import net.mcbrincie.apel.lib.util.math.TrigTable;
 import net.mcbrincie.apel.lib.util.scheduler.ApelScheduler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Apel implements ModInitializer {
     public static final String MOD_ID = "apel";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static final ApelScheduler SCHEDULER = new ApelScheduler();
     public static final ExecutorService DRAW_EXECUTOR = Executors.newSingleThreadExecutor();
