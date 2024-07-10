@@ -184,10 +184,10 @@ public abstract class PathAnimatorBase<T extends PathAnimatorBase<T>> {
      *
      * @return The previous amount of rendering steps
      */
-    public final ParticleObject<? extends ParticleObject<?>> setParticleObject(@NotNull ParticleObject<? extends ParticleObject<?>> object) {
-        ParticleObject<?> particleObject = this.particleObject;
-        this.particleObject = object;
-        return particleObject;
+    public final ParticleObject<? extends ParticleObject<?>> setParticleObject(@NotNull ParticleObject<? extends ParticleObject<?>>  particleObject) {
+        ParticleObject<?> prevParticleObject = this.particleObject;
+        this.particleObject = particleObject;
+        return prevParticleObject;
     }
 
     /** Gets the processing speed. Which is measured in rs/st and dictates how many functions
