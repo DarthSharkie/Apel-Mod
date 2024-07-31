@@ -242,13 +242,17 @@ public abstract class PathAnimatorBase {
             this.particleObject.doDraw(renderer, step, drawPosition);
             renderer.afterFrame(step, drawPosition);
         };
+        Runnable delayFunc = () -> {
+            renderer.beforeFrame(step, drawPosition);
+            renderer.afterFrame(step, drawPosition);
+        };
         if (this.delay == 0) {
             Apel.DRAW_EXECUTOR.submit(func);
             return;
         }
         if (this.processingSpeed <= 1) {
             Apel.SCHEDULER.allocateNewStep(
-                    this, new ScheduledStep(this.delay, new Runnable[]{func})
+                    this, new ScheduledStep(this.delay, new Runnable[]{func}, delayFunc)
             );
             return;
         } else if (step % this.processingSpeed != 0) {
@@ -256,7 +260,7 @@ public abstract class PathAnimatorBase {
             return;
         }
         Apel.SCHEDULER.allocateNewStep(
-                this, new ScheduledStep(this.delay, this.storedFuncsBuffer.toArray(Runnable[]::new))
+                this, new ScheduledStep(this.delay, this.storedFuncsBuffer.toArray(Runnable[]::new), delayFunc)
         );
         this.storedFuncsBuffer.clear();
     }
