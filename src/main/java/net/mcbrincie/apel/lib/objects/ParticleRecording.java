@@ -1,7 +1,6 @@
 package net.mcbrincie.apel.lib.objects;
 
 import io.netty.buffer.Unpooled;
-import net.mcbrincie.apel.lib.renderers.ApelBakingRenderer;
 import net.mcbrincie.apel.lib.renderers.ApelRenderer;
 import net.mcbrincie.apel.lib.renderers.ApelServerRenderer;
 import net.mcbrincie.apel.lib.util.interceptor.DrawContext;
@@ -52,31 +51,31 @@ public class ParticleRecording extends ParticleObject<ParticleRecording> {
 
                 case ApelRenderer.Particle(Vector3f pos) -> renderer.drawParticle(particleEffect, 0, pos);
 
-                case ApelRenderer.Line(Vector3f drawPos, Vector3f start, Vector3f end, Vector3f rotation, int amount) ->
-                        renderer.drawLine(particleEffect, 0, drawPos, start, end, rotation, amount);
+                case ApelRenderer.Line(Vector3f drawPos, Vector3f start, Vector3f end, Vector3f lineRotation, int lineAmount) ->
+                        renderer.drawLine(particleEffect, 0, drawPos, start, end, lineRotation, lineAmount);
 
                 case ApelRenderer.Ellipse(
-                        Vector3f center, float radius, float stretch, Vector3f rotation, int amount
-                ) -> renderer.drawEllipse(particleEffect, 0, center, radius, stretch, rotation, amount);
+                        Vector3f center, float radius, float stretch, Vector3f ellipseRotation, int ellipseAmount
+                ) -> renderer.drawEllipse(particleEffect, 0, center, radius, stretch, ellipseRotation, ellipseAmount);
 
                 case ApelRenderer.Ellipsoid(
-                        Vector3f drawPos, float xSemiAxis, float ySemiAxis, float zSemiAxis, Vector3f rotation,
-                        int amount
-                ) -> renderer.drawEllipsoid(particleEffect, 0, drawPos, xSemiAxis, ySemiAxis, zSemiAxis, rotation,
-                        amount
+                        Vector3f drawPos, float xSemiAxis, float ySemiAxis, float zSemiAxis, Vector3f ellipsoidRotation,
+                        int ellipsoidAmount
+                ) -> renderer.drawEllipsoid(particleEffect, 0, drawPos, xSemiAxis, ySemiAxis, zSemiAxis, ellipsoidRotation,
+                        ellipsoidAmount
                 );
 
                 case ApelRenderer.BezierCurve(
-                        Vector3f drawPos, BezierCurve bezierCurve, Vector3f rotation, int amount
-                ) -> renderer.drawBezier(particleEffect, 0, drawPos, bezierCurve, rotation, amount);
+                        Vector3f drawPos, BezierCurve bezierCurve, Vector3f bezierRotation, int bezierAmount
+                ) -> renderer.drawBezier(particleEffect, 0, drawPos, bezierCurve, bezierRotation, bezierAmount);
 
                 case ApelRenderer.Cone(
-                        Vector3f drawPos, float height, float radius, Vector3f rotation, int amount
-                ) -> renderer.drawCone(particleEffect, 0, drawPos, height, radius, rotation, amount);
+                        Vector3f drawPos, float height, float radius, Vector3f coneRotation, int coneAmount
+                ) -> renderer.drawCone(particleEffect, 0, drawPos, height, radius, coneRotation, coneAmount);
 
                 case ApelRenderer.Cylinder(
-                        Vector3f drawPos, float radius, float height, Vector3f rotation, int amount
-                ) -> renderer.drawCylinder(particleEffect, 0, drawPos, radius, height, rotation, amount);
+                        Vector3f drawPos, float radius, float height, Vector3f cylinderRotation, int cylinderAmount
+                ) -> renderer.drawCylinder(particleEffect, 0, drawPos, radius, height, cylinderRotation, cylinderAmount);
             }
             // Only increment after drawing, since some case(s) return early
             this.instructionNumber++;
