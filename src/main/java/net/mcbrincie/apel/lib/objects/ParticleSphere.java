@@ -18,8 +18,8 @@ public class ParticleSphere extends ParticleObject<ParticleSphere> {
     }
 
     private ParticleSphere(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setRadius(builder.radius);
     }
 

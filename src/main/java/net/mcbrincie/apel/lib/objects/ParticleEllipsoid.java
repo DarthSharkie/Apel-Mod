@@ -21,8 +21,8 @@ public class ParticleEllipsoid extends ParticleObject<ParticleEllipsoid> {
     }
 
     private ParticleEllipsoid(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setXSemiAxis(builder.xSemiAxis);
         this.setYSemiAxis(builder.ySemiAxis);
         this.setZSemiAxis(builder.zSemiAxis);

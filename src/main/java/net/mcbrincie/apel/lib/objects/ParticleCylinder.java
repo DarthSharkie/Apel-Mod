@@ -22,8 +22,8 @@ public class ParticleCylinder extends ParticleObject<ParticleCylinder> {
     }
 
     private ParticleCylinder(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setRadius(builder.radius);
         this.setHeight(builder.height);
     }

@@ -52,7 +52,8 @@ public class ParticleCuboid extends ParticleObject<ParticleCuboid> {
     }
 
     private ParticleCuboid(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, 1, builder.beforeDraw, builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, 1, builder.beforeDraw,
+              builder.afterDraw);
         // Defensive copies are made in setters to protect against in-place modification of vectors
         this.setSize(builder.size);
         this.setAmounts(builder.amounts);

@@ -32,7 +32,8 @@ public class ParticleImage extends ParticleObject<ParticleImage> {
     private HashMap<Vector3f, ParticleEffect> positions;
 
     public ParticleImage(String filename, Vector3f rotation) {
-        super(null, rotation, new Vector3f(0), 1, ObjectInterceptor.identity(), ObjectInterceptor.identity());
+        super(null, rotation, new Vector3f(1), new Vector3f(0), 1, ObjectInterceptor.identity(),
+              ObjectInterceptor.identity());
         this.setFilename(filename);
     }
 

@@ -26,8 +26,8 @@ public class ParticleMirror extends ParticleObject<ParticleMirror> {
     }
 
     private ParticleMirror(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, ObjectInterceptor.identity(),
-              ObjectInterceptor.identity());
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              ObjectInterceptor.identity(), ObjectInterceptor.identity());
         this.setTargetObject(builder.target_object);
         this.setDistance(builder.distance);
         this.setLockX(builder.lockX);

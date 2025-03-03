@@ -32,8 +32,8 @@ public class ParticlePolygon extends ParticleObject<ParticlePolygon> {
     }
 
     private <B extends Builder<B>> ParticlePolygon(Builder<B> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setSides(builder.sides);
         this.setSize(builder.size);
         this.setCurve(builder.curve);

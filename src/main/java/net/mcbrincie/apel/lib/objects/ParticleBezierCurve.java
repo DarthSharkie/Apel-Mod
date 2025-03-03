@@ -28,10 +28,8 @@ public class ParticleBezierCurve extends ParticleObject<ParticleBezierCurve> {
     }
 
     private ParticleBezierCurve(Builder<?> builder) {
-        super(
-                builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-                builder.afterDraw
-        );
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setBezierCurves(builder.bezierCurves, builder.amounts);
     }
 

@@ -25,7 +25,6 @@ import java.util.List;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ParticleModel extends ParticleObject<ParticleModel> {
     protected final ObjModel objModel;
-    protected Vector3f scale;
     protected float particle_interval = -1f;
 
     public static Key<ObjModel> objectModelKey(String name) {
@@ -42,11 +41,11 @@ public class ParticleModel extends ParticleObject<ParticleModel> {
         super();
         this.setParticleEffect(builder.particleEffect);
         this.setRotation(builder.rotation);
+        this.setScale(builder.scale);
         this.setOffset(builder.offset);
         this.setBeforeDraw(builder.beforeDraw);
         this.setAfterDraw(builder.afterDraw);
         this.objModel = builder.objectModel;
-        this.setScale(builder.scale);
         if (builder.interval != -1.0f) {
             this.setInterval(builder.interval);
             return;
@@ -62,33 +61,8 @@ public class ParticleModel extends ParticleObject<ParticleModel> {
     public ParticleModel(ParticleModel model) {
         super(model);
         this.objModel = model.objModel;
-        this.scale = model.scale;
         this.particle_interval = model.particle_interval;
     }
-
-    /**
-     * Set the scale of this ParticleModel and returns the previous scaling that was used.
-     * Negative scaling will invert the corresponding axis.  Zero scaling is not allowed.
-     * <p>
-     * This implementation is used by the constructor, so subclasses cannot override this method.
-     *
-     * @param newScale the new scale
-     * @return the previously used scale
-    */
-    public final Vector3f setScale(Vector3f newScale) {
-        if (newScale.x == 0 || newScale.y == 0 || newScale.z == 0) {
-            throw new IllegalArgumentException("Scale must non-zero");
-        }
-        Vector3f prevScale = this.scale;
-        this.scale = newScale;
-        return prevScale;
-    }
-
-    /** Gets the scale of the ParticleModel and returns it.
-     *
-     * @return the scale of the ParticleModel
-     */
-    public Vector3f getScale() {return this.scale;}
 
     /** Gets the interval of particles that are currently in use and returns it.
      *
@@ -169,37 +143,11 @@ public class ParticleModel extends ParticleObject<ParticleModel> {
     */
     public static class Builder<B extends Builder<B>> extends ParticleObject.Builder<B, ParticleModel> {
         private static final ModelParserManager MODEL_PARSER_MANAGER = new ModelParserManager();
-        protected Vector3f scale = new Vector3f(1);
         protected String filename;
         protected float interval = -1f;
         protected ObjModel objectModel;
 
         private Builder() {}
-
-        /**
-         * Scale the particle model by distinct values per axis.  This method is not cumulative; repeated calls will
-         * overwrite values.  To scale uniformly, see {@link #scale(float)}, which shares overwrite behavior with this
-         * method.
-         *
-         * @param scale The scale per axis xyz
-         * @return The builder instance
-        */
-        public B scale(Vector3f scale) {
-            this.scale = scale;
-            return self();
-        }
-
-        /**
-         * Scale the model uniformly on all axes.  This method is not cumulative; repeated calls will overwrite values.
-         * To scale per-axis, see {@link #scale(Vector3f)}, which shares overwrite behavior with this method.
-         *
-         * @param scale The scale for all the axis
-         * @return The builder instance
-        */
-        public B scale(float scale) {
-            this.scale = new Vector3f(scale);
-            return self();
-        }
 
         /**
          * Load a model from the given filename.  This method is not cumulative; repeated calls will overwrite the

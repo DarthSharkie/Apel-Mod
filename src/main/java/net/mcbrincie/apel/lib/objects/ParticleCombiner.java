@@ -66,8 +66,8 @@ public class ParticleCombiner extends ParticleObject<ParticleCombiner> {
     }
 
     private ParticleCombiner(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, ObjectInterceptor.identity(),
-              ObjectInterceptor.identity());
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              ObjectInterceptor.identity(), ObjectInterceptor.identity());
         this.setObjects(builder.objects);
         this.setAfterChildDraw(builder.afterChildDraw);
         this.setBeforeChildDraw(builder.beforeChildDraw);

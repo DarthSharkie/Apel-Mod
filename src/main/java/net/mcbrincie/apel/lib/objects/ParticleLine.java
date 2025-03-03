@@ -27,8 +27,8 @@ public class ParticleLine extends ParticleObject<ParticleLine> {
     }
 
     private ParticleLine(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setStart(builder.start);
         this.setEnd(builder.end);
     }

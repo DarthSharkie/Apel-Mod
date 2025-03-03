@@ -21,8 +21,8 @@ public class ParticleEllipse extends ParticleObject<ParticleEllipse> {
     }
 
     private ParticleEllipse(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setRadius(builder.radius);
         this.setStretch(builder.stretch);
     }

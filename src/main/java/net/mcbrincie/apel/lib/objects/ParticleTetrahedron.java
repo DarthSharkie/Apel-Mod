@@ -20,8 +20,8 @@ public class ParticleTetrahedron extends ParticleObject<ParticleTetrahedron> {
     }
 
     private ParticleTetrahedron(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setVertices(builder.vertex1, builder.vertex2, builder.vertex3, builder.vertex4);
     }
 

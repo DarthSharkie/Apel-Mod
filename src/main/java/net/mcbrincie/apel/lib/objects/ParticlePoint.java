@@ -24,9 +24,8 @@ public class ParticlePoint extends ParticleObject<ParticlePoint> {
     }
 
     private ParticlePoint(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw
-        );
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
     }
 
     /** The copy constructor for a specific particle object. It copies all

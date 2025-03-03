@@ -29,8 +29,8 @@ public class ParticleArray<O extends ParticleObject<O>> extends ParticleObject<P
     }
 
     private <B extends Builder<B, O>> ParticleArray(Builder<B, O> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setParticleObject(builder.particleObject);
         this.setSpacing(builder.spacing);
         this.setGridSize(builder.gridSize);

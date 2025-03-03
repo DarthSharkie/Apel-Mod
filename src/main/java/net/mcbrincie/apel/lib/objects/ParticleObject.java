@@ -51,6 +51,7 @@ import java.util.Optional;
 public abstract class ParticleObject<T extends ParticleObject<T>> {
     protected ParticleEffect particleEffect;
     protected Vector3f rotation;
+    protected Vector3f scale = new Vector3f(1, 1, 1);
     protected Vector3f offset = new Vector3f(0, 0, 0);
     protected int amount = 1;
     protected ObjectInterceptor<T> afterDraw = ObjectInterceptor.identity();
@@ -61,17 +62,19 @@ public abstract class ParticleObject<T extends ParticleObject<T>> {
      *
      * @param particleEffect The particle effect to use
      * @param rotation The rotation to apply
+     * @param scale The scale to apply
      * @param offset The offset to apply
      * @param amount The amount of particles to use when rendering the object (subject to specific subclass
      *         usage)
      * @param beforeDraw The interceptor to call before drawing the object
      * @param afterDraw The interceptor to call after drawing the object
      */
-    protected ParticleObject(ParticleEffect particleEffect, Vector3f rotation, Vector3f offset, int amount,
-                             ObjectInterceptor<T> beforeDraw, ObjectInterceptor<T> afterDraw
+    protected ParticleObject(ParticleEffect particleEffect, Vector3f rotation, Vector3f scale, Vector3f offset,
+                             int amount, ObjectInterceptor<T> beforeDraw, ObjectInterceptor<T> afterDraw
     ) {
         this.setParticleEffect(particleEffect);
         this.setRotation(rotation);
+        this.setScale(scale);
         this.setOffset(offset);
         this.setAmount(amount);
         this.setBeforeDraw(beforeDraw);
@@ -87,6 +90,7 @@ public abstract class ParticleObject<T extends ParticleObject<T>> {
     protected ParticleObject(ParticleObject<T> object) {
         this.particleEffect = object.particleEffect;
         this.rotation = new Vector3f(object.rotation);
+        this.scale = new Vector3f(object.scale);
         this.offset = new Vector3f(object.offset);
         this.amount = object.amount;
         this.beforeDraw = object.beforeDraw;
@@ -157,6 +161,33 @@ public abstract class ParticleObject<T extends ParticleObject<T>> {
         float y = (float) (rotation.y % Math.TAU);
         float z = (float) (rotation.z % Math.TAU);
         return new Vector3f(x, y, z);
+    }
+
+    /**
+     * Gets the current scale value used.  Scale acts like a multiplier prior to rendering.
+     *
+     * @return The scale factor
+     */
+    public Vector3f getScale() {
+        return this.scale;
+    }
+
+    /**
+     * Set the scale of this ParticleObject and returns the previous scaling that was used.
+     * Negative scaling will invert the corresponding axis.  Zero scaling is not allowed.
+     * <p>
+     * This implementation is used by the constructor, so subclasses cannot override this method.
+     *
+     * @param scale The new scale value
+     * @return The previous scale
+     */
+    public final Vector3f setScale(Vector3f scale) {
+        if (scale.x == 0 || scale.y == 0 || scale.z == 0) {
+            throw new IllegalArgumentException("Scale must non-zero");
+        }
+        Vector3f prevScale = this.scale;
+        this.scale = scale;
+        return prevScale;
     }
 
     /** Gets the current offset value used. The offset position is added with the drawing position.
@@ -239,7 +270,7 @@ public abstract class ParticleObject<T extends ParticleObject<T>> {
      * step, and the drawing position.
      *
      * <p><b>The method should not be called directly.</b>  It will be called via
-     * {@link #doDraw(ApelServerRenderer, int, Vector3f)} by {@code PathAnimatorBase} subclasses to draw objects along
+     * {@link #doDraw(ApelServerRenderer, int, Vector3f, int)} by {@code PathAnimatorBase} subclasses to draw objects along
      * the animation path or at an animation point.  These animators will provide the renderer and calculate the
      * current {@code step} and the {@code drawPos}.  The renderer will have access to the {@code ServerWorld}.
      * <p>
@@ -275,6 +306,10 @@ public abstract class ParticleObject<T extends ParticleObject<T>> {
         // Default implementation does nothing
     }
 
+    public ObjectInterceptor<T> getAfterDraw() {
+        return afterDraw;
+    }
+
     /**
      * Provides a base for ParticleObject subclasses to extend when creating their builders.
      * <p>
@@ -289,6 +324,7 @@ public abstract class ParticleObject<T extends ParticleObject<T>> {
     public static abstract class Builder<B extends Builder<B, T>, T extends ParticleObject<T>> {
         protected ParticleEffect particleEffect;
         protected Vector3f rotation = new Vector3f(0);
+        protected Vector3f scale = new Vector3f(1);
         protected Vector3f offset = new Vector3f(0);
         protected int amount = 1;
         protected ObjectInterceptor<T> beforeDraw;
@@ -313,6 +349,31 @@ public abstract class ParticleObject<T extends ParticleObject<T>> {
          */
         public final B rotation(Vector3f rotation) {
             this.rotation = rotation;
+            return self();
+        }
+
+        /**
+         * Scale the particle object by distinct values per axis.  This method is not cumulative; repeated calls will
+         * overwrite values.  To scale uniformly, see {@link #scale(float)}, which shares overwrite behavior with this
+         * method.
+         *
+         * @param scale The scale per axis
+         * @return The builder instance
+         */
+        public final B scale(Vector3f scale) {
+            this.scale = scale;
+            return self();
+        }
+
+        /**
+         * Scale the object uniformly on all axes.  This method is not cumulative; repeated calls will overwrite values.
+         * To scale per-axis, see {@link #scale(Vector3f)}, which shares overwrite behavior with this method.
+         *
+         * @param scale The scale for all axes
+         * @return The builder instance
+         */
+        public final B scale(float scale) {
+            this.scale = new Vector3f(scale);
             return self();
         }
 

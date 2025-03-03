@@ -30,8 +30,8 @@ public class ParticleQuad extends ParticleObject<ParticleQuad> {
     }
 
     private ParticleQuad(Builder<?> builder) {
-        super(builder.particleEffect, builder.rotation, builder.offset, builder.amount, builder.beforeDraw,
-              builder.afterDraw);
+        super(builder.particleEffect, builder.rotation, builder.scale, builder.offset, builder.amount,
+              builder.beforeDraw, builder.afterDraw);
         this.setVertex1(builder.vertex1);
         this.setVertex2(builder.vertex2);
         this.setVertex3(builder.vertex3);
