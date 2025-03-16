@@ -183,16 +183,17 @@ public interface ApelRenderer {
      * @param step The current animation step
      * @param drawPos The point where the base of the cone is
      * @param height The height of the cone
-     * @param radius The radius of the cone
+     * @param radius The radius of the cone (applied in x-axis directory, prior to rotation)
+     * @param stretch The stretch of the cone (applied in z-axis direction, prior to rotation)
      * @param rotation The rotation of the cone
      * @param amount The number of particles in the cone
      */
     default void drawCone(
-            ParticleEffect particleEffect, int step, Vector3f drawPos, float height, float radius, Vector3f rotation,
-            int amount
+            ParticleEffect particleEffect, int step, Vector3f drawPos, float height, float radius, float stretch,
+            Vector3f rotation, int amount
     ) {
         final double sqrt5Plus1 = 3.23606;
-        Vector3f scale = new Vector3f(radius, height, radius);
+        Vector3f scale = new Vector3f(radius, height, stretch);
         Quaternionfc quaternion = new Quaternionf().rotateZ(rotation.z).rotateY(rotation.y).rotateX(rotation.x);
         for (int i = 0; i < amount; i++) {
             // Offset into the real-number distribution
@@ -515,7 +516,8 @@ public interface ApelRenderer {
         }
     }
 
-    record Cone(Vector3f drawPos, float height, float radius, Vector3f rotation, int amount) implements Instruction {
+    record Cone(Vector3f drawPos, float height, float radius, float stretch, Vector3f rotation,
+                int amount) implements Instruction {
 
         static Cone from(RegistryByteBuf buf) {
             return new Cone(
@@ -524,6 +526,8 @@ public interface ApelRenderer {
                     // height
                     buf.readFloat(),
                     // radius
+                    buf.readFloat(),
+                    // stretch
                     buf.readFloat(),
                     // rotation
                     new Vector3f(buf.readFloat(), buf.readFloat(), buf.readFloat()),
@@ -540,6 +544,7 @@ public interface ApelRenderer {
             buf.writeFloat(drawPos.z);
             buf.writeFloat(height);
             buf.writeFloat(radius);
+            buf.writeFloat(stretch);
             buf.writeFloat(rotation.x);
             buf.writeFloat(rotation.y);
             buf.writeFloat(rotation.z);

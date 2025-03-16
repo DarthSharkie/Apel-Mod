@@ -83,8 +83,8 @@ public class ParticleCone extends ParticleObject<ParticleCone> {
     public void draw(ApelServerRenderer renderer, DrawContext drawContext) {
         Vector3f objectDrawPos = new Vector3f(drawContext.getPosition()).add(this.offset);
         renderer.drawCone(
-                this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.height, this.radius,
-                this.rotation, this.amount
+                this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.height * this.scale.y,
+                this.radius * this.scale.x, this.radius * this.scale.z, this.rotation, this.amount
         );
     }
 
