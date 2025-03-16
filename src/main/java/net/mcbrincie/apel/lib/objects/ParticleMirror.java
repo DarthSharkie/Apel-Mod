@@ -219,6 +219,8 @@ public class ParticleMirror extends ParticleObject<ParticleMirror> {
 
         @Override
         public ParticleMirror build() {
+            // TODO: consider how to scale in ParticleMirror, but for now, don't allow scaling the mirror.
+            this.scale(new Vector3f(1));
             if (this.target_object == null) {
                 throw new IllegalStateException("A Target Particle Object Must Be Provided");
             }

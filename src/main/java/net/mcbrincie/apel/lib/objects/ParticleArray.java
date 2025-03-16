@@ -15,8 +15,7 @@ import org.joml.Vector3i;
  * <p>
  * The array will be centered around the {@link DrawContext}'s {@code position} property, though the entire array
  * can be adjusted with the {@code offset} property, as usual.  The individual object offset will be consistent across
- * all renderings.  The entire array may also be rotated by using the {@code rotation} property.  Individual objects
- * will be rotated consistently per the object's {@code rotation} value.
+ * all renderings.  Individual objects will be rotated consistently per the object's {@code rotation} value.
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ParticleArray<O extends ParticleObject<O>> extends ParticleObject<ParticleArray<O>> {
@@ -166,6 +165,8 @@ public class ParticleArray<O extends ParticleObject<O>> extends ParticleObject<P
 
         @Override
         public ParticleArray<T> build() {
+            // TODO: consider how to scale in ParticleArray, but for now, don't allow scaling the array.
+            this.scale(new Vector3f(1));
             if (this.gridSize == null) {
                 throw new IllegalStateException("GridSize must be provided");
             }

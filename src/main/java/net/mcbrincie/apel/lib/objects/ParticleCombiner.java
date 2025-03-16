@@ -639,6 +639,8 @@ public class ParticleCombiner extends ParticleObject<ParticleCombiner> {
 
         @Override
         public ParticleCombiner build() {
+            // TODO: consider how to scale in ParticleCombiner, but for now, don't allow scaling the combined object(s).
+            this.scale(new Vector3f(1));
             return new ParticleCombiner(this);
         }
     }
