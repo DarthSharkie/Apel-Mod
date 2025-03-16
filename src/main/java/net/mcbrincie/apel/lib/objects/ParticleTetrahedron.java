@@ -182,12 +182,16 @@ public class ParticleTetrahedron extends ParticleObject<ParticleTetrahedron> {
         Vector3f objectDrawPos = new Vector3f(drawContext.getPosition()).add(this.offset);
 
         int step = drawContext.getCurrentStep();
-        renderer.drawLine(this.particleEffect, step, objectDrawPos, this.vertex1, this.vertex2, this.rotation, this.amount);
-        renderer.drawLine(this.particleEffect, step, objectDrawPos, this.vertex1, this.vertex3, this.rotation, this.amount);
-        renderer.drawLine(this.particleEffect, step, objectDrawPos, this.vertex1, this.vertex4, this.rotation, this.amount);
-        renderer.drawLine(this.particleEffect, step, objectDrawPos, this.vertex2, this.vertex3, this.rotation, this.amount);
-        renderer.drawLine(this.particleEffect, step, objectDrawPos, this.vertex2, this.vertex4, this.rotation, this.amount);
-        renderer.drawLine(this.particleEffect, step, objectDrawPos, this.vertex3, this.vertex4, this.rotation, this.amount);
+        Vector3f scaledVertex1 = new Vector3f(this.vertex1).mul(this.scale);
+        Vector3f scaledVertex2 = new Vector3f(this.vertex2).mul(this.scale);
+        Vector3f scaledVertex3 = new Vector3f(this.vertex3).mul(this.scale);
+        Vector3f scaledVertex4 = new Vector3f(this.vertex4).mul(this.scale);
+        renderer.drawLine(this.particleEffect, step, objectDrawPos, scaledVertex1, scaledVertex2, this.rotation, this.amount);
+        renderer.drawLine(this.particleEffect, step, objectDrawPos, scaledVertex1, scaledVertex3, this.rotation, this.amount);
+        renderer.drawLine(this.particleEffect, step, objectDrawPos, scaledVertex1, scaledVertex4, this.rotation, this.amount);
+        renderer.drawLine(this.particleEffect, step, objectDrawPos, scaledVertex2, scaledVertex3, this.rotation, this.amount);
+        renderer.drawLine(this.particleEffect, step, objectDrawPos, scaledVertex2, scaledVertex4, this.rotation, this.amount);
+        renderer.drawLine(this.particleEffect, step, objectDrawPos, scaledVertex3, scaledVertex4, this.rotation, this.amount);
     }
 
     public static class Builder<B extends Builder<B>> extends ParticleObject.Builder<B, ParticleTetrahedron> {

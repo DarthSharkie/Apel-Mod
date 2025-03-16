@@ -122,8 +122,9 @@ public class ParticleEllipsoid extends ParticleObject<ParticleEllipsoid> {
     @Override
     public void draw(ApelServerRenderer renderer, DrawContext drawContext) {
         Vector3f objectDrawPos = new Vector3f(drawContext.getPosition()).add(this.offset);
-        renderer.drawEllipsoid(this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.xSemiAxis,
-                               this.ySemiAxis, this.zSemiAxis, this.rotation, this.amount
+        renderer.drawEllipsoid(this.particleEffect, drawContext.getCurrentStep(), objectDrawPos,
+                               this.xSemiAxis * this.scale.x, this.ySemiAxis * this.scale.y,
+                               this.zSemiAxis * this.scale.z, this.rotation, this.amount
         );
     }
 

@@ -190,10 +190,10 @@ public class ParticlePolygon extends ParticleObject<ParticlePolygon> {
             newVertices[this.sides] = new Vector3f(newVertices[0]);
             return newVertices;
         });
-        // Defensive copy of vertices, scaled after copying, so the cache isn't corrupted
+        // Defensive copy of vertices, sized and scaled after copying, so the cache isn't corrupted
         Vector3f[] verticesCopy = new Vector3f[cachedVertices.length];
         for (int i = 0; i < cachedVertices.length; i++) {
-            verticesCopy[i] = new Vector3f(cachedVertices[i]).mul(this.size);
+            verticesCopy[i] = new Vector3f(cachedVertices[i]).mul(this.size).mul(this.scale);
         }
         return verticesCopy;
     }

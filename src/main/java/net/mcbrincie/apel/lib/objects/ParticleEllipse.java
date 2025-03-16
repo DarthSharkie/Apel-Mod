@@ -92,8 +92,8 @@ public class ParticleEllipse extends ParticleObject<ParticleEllipse> {
     public void draw(ApelServerRenderer renderer, DrawContext drawContext) {
         Vector3f objectDrawPos = new Vector3f(drawContext.getPosition()).add(this.offset);
         renderer.drawEllipse(
-                this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.radius, this.stretch,
-                this.rotation, this.amount
+                this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.radius * this.scale.x,
+                this.stretch * this.scale.y, this.rotation, this.amount
         );
     }
 

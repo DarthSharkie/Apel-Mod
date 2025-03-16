@@ -98,7 +98,10 @@ public class ParticleLine extends ParticleObject<ParticleLine> {
     @Override
     public void draw(ApelServerRenderer renderer, DrawContext drawContext) {
         Vector3f objectDrawPos = new Vector3f(drawContext.getPosition()).add(this.offset);
-        renderer.drawLine(this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.start, this.end, this.rotation, this.amount);
+        Vector3f scaledStart = new Vector3f(this.start).mul(this.scale);
+        Vector3f scaledEnd = new Vector3f(this.end).mul(this.scale);
+        renderer.drawLine(this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, scaledStart, scaledEnd,
+                          this.rotation, this.amount);
     }
 
     public static class Builder<B extends Builder<B>> extends ParticleObject.Builder<B, ParticleLine> {

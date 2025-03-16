@@ -148,9 +148,9 @@ public class ParticleCuboid extends ParticleObject<ParticleCuboid> {
     @Override
     protected void prepareContext(DrawContext drawContext) {
         // Scale
-        float width = size.x / 2f;
-        float height = size.y / 2f;
-        float depth = size.z / 2f;
+        float width = this.scale.x * size.x / 2f;
+        float height = this.scale.y * size.y / 2f;
+        float depth = this.scale.z * size.z / 2f;
         // Compute the cuboid vertices
         Vector3f vertex0 = new Vector3f(width, -height, -depth);
         Vector3f vertex1 = new Vector3f(width, -height, depth);
