@@ -101,6 +101,19 @@ public abstract class BezierCurve {
         return prev;
     }
 
+    public BezierCurve scale(Vector3f scale) {
+        if (scale.equals(new Vector3f(1))) {
+            return this;
+        }
+        Vector3f newStart = new Vector3f(this.getStart()).mul(scale);
+        Vector3f newEnd = new Vector3f(this.getEnd()).mul(scale);
+        List<Vector3f> newControlPoints = this.getControlPoints()
+                .stream()
+                .map((controlPoint) -> new Vector3f(controlPoint).mul(scale))
+                .toList();
+        return BezierCurve.of(newStart, newEnd, newControlPoints);
+    }
+
     /**
      * Gets the list of control points, if any, and returns it.
      *

@@ -168,13 +168,14 @@ public class ParticleBezierCurve extends ParticleObject<ParticleBezierCurve> {
 
         int curveCount = this.bezierCurves.size();
         for (int i = 0; i < curveCount; i++) {
-            drawContext.addMetadata(BEZIER_CURVE, this.bezierCurves.get(i));
+            BezierCurve bezierCurve = this.bezierCurves.get(i).scale(this.scale);
+            drawContext.addMetadata(BEZIER_CURVE, bezierCurve);
             drawContext.addMetadata(AMOUNT, this.amounts.get(i));
             this.beforeDraw.apply(drawContext, this);
-            BezierCurve bezierCurve = drawContext.getMetadata(BEZIER_CURVE, this.bezierCurves.get(i));
+            BezierCurve curveToDraw = drawContext.getMetadata(BEZIER_CURVE, bezierCurve);
             int amountForCurve = drawContext.getMetadata(AMOUNT, this.amounts.get(i));
 
-            renderer.drawBezier(this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, bezierCurve,
+            renderer.drawBezier(this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, curveToDraw,
                                 this.rotation, amountForCurve
             );
         }
