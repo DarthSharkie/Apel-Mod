@@ -217,14 +217,15 @@ public interface ApelRenderer {
      *
      * @param particleEffect The ParticleEffect to use
      * @param center The point at the center of the base of the cylinder
-     * @param radius The radius of the cylinder
+     * @param radius The radius of the cylinder (applied in x-axis direction, prior to rotation)
      * @param height The height of the cylinder
+     * @param stretch The stretch of the cylinder (applied in z-axis direction, prior to rotation)
      * @param rotation Rotation applied to the cylinder
      * @param amount The number of particles to use to draw the cylinder
      */
     default void drawCylinder(
-            ParticleEffect particleEffect, int step, Vector3f center, float radius, float height, Vector3f rotation,
-            int amount
+            ParticleEffect particleEffect, int step, Vector3f center, float radius, float height, float stretch,
+            Vector3f rotation, int amount
     ) {
         float stepHeight = height / amount;
         float stepAngle = (float) Math.TAU / 1.618033f;
@@ -233,7 +234,7 @@ public interface ApelRenderer {
             float angle = i * stepAngle;
             float x = radius * trigTable.getCosine(angle);
             float y = stepHeight * i;
-            float z = radius * trigTable.getSine(angle);
+            float z = stretch * trigTable.getSine(angle);
             Vector3f pos = new Vector3f(x, y, z).rotate(quaternion).add(center);
             drawParticle(particleEffect, step, pos);
         }
@@ -571,7 +572,8 @@ public interface ApelRenderer {
         }
     }
 
-    record Cylinder(Vector3f center, float radius, float height, Vector3f rotation, int amount) implements Instruction {
+    record Cylinder(Vector3f center, float radius, float height, float stretch, Vector3f rotation,
+                    int amount) implements Instruction {
 
         static final float ANGLE_INCREMENT = (float) (Math.TAU / 1.618033f);
 
@@ -582,6 +584,8 @@ public interface ApelRenderer {
                     // radius
                     buf.readFloat(),
                     // height
+                    buf.readFloat(),
+                    // stretch
                     buf.readFloat(),
                     // rotation
                     new Vector3f(buf.readFloat(), buf.readFloat(), buf.readFloat()),
@@ -598,6 +602,7 @@ public interface ApelRenderer {
             buf.writeFloat(center.z);
             buf.writeFloat(radius);
             buf.writeFloat(height);
+            buf.writeFloat(stretch);
             buf.writeFloat(rotation.x);
             buf.writeFloat(rotation.y);
             buf.writeFloat(rotation.z);

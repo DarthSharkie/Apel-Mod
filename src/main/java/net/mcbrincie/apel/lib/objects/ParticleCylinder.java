@@ -93,8 +93,8 @@ public class ParticleCylinder extends ParticleObject<ParticleCylinder> {
     public void draw(ApelServerRenderer renderer, DrawContext drawContext) {
         Vector3f objectDrawPos = new Vector3f(drawContext.getPosition()).add(this.offset);
         renderer.drawCylinder(
-                this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.radius, this.height,
-                this.rotation, this.amount
+                this.particleEffect, drawContext.getCurrentStep(), objectDrawPos, this.radius * this.scale.x,
+                this.height * this.scale.y, this.radius * this.scale.z, this.rotation, this.amount
         );
     }
 
